@@ -258,7 +258,8 @@ div_3_graph = dcc.Graph(
 					}
 		    )
 
-div_row3 = html.Div(children =	[div_3_button,
+div_row3 = html.Div(children =	[
+								# div_3_button,
 								div_3_graph
 								],
 					style = {
@@ -289,7 +290,8 @@ div_4_graph = dcc.Graph(
 
 
 
-div_row4 = html.Div(children =	[div_4_button,
+div_row4 = html.Div(children =	[
+								# div_4_button,
 								div_4_graph
 								],
 					style = {
@@ -512,26 +514,26 @@ def update_survival_function(drug_list):
     }
 
 
-@app.callback(
-    [Output('checklist-three-categories-tumor-volume-1', 'options'),
-    Output('checklist-three-categories-tumor-volume-1', 'value')],
-    [Input('checklist-three-categories-survival-function-1', 'value')])
-def set_weights_3_options(selected_categories):
-	categories = {'Lightweight': ['Capomulin','Ramicane'],
-					'Placebo': ['Placebo'],
-					'Heavyweight': ['Ceftamin', 'Infubinol', 'Ketapril', 
-								'Naftisol', 'Propriva', 'Stelasyn','Zoniferol']}
-	output_options = []
-	for category in selected_categories:
-		output_options.extend(categories[category])
-	return [{'label': i, 'value': i} for i in output_options], output_options
+# @app.callback(
+#     [Output('checklist-three-categories-tumor-volume-1', 'options'),
+#     Output('checklist-three-categories-tumor-volume-1', 'value')],
+#     [Input('checklist-three-categories-survival-function-2', 'value')])
+# def set_weights_3_options(selected_categories):
+# 	categories = {'Lightweight': ['Capomulin','Ramicane'],
+# 					'Placebo': ['Placebo'],
+# 					'Heavyweight': ['Ceftamin', 'Infubinol', 'Ketapril', 
+# 								'Naftisol', 'Propriva', 'Stelasyn','Zoniferol']}
+# 	output_options = []
+# 	for category in selected_categories:
+# 		output_options.extend(categories[category])
+# 	return [{'label': i, 'value': i} for i in output_options], output_options
 
 
 
 
 @app.callback(
     Output('tumor-volume', 'figure'),
-    [Input('checklist-three-categories-tumor-volume-1', 'value')]
+    [Input('checklist-three-categories-survival-function-2', 'value')]
 )
 def update_tumor_volume(drug_list):
     traces = []
@@ -564,26 +566,26 @@ def update_tumor_volume(drug_list):
 
 
 
-@app.callback(
-    [Output('checklist-three-categories-metastatic-sites', 'options'),
-    Output('checklist-three-categories-metastatic-sites', 'value')],
-    [Input('checklist-three-categories-survival-function-1', 'value')])
-def set_weights_3_options(selected_categories):
-	categories = {'Lightweight': ['Capomulin','Ramicane'],
-					'Placebo': ['Placebo'],
-					'Heavyweight': ['Ceftamin', 'Infubinol', 'Ketapril', 
-								'Naftisol', 'Propriva', 'Stelasyn','Zoniferol']}
-	output_options = []
-	for category in selected_categories:
-		output_options.extend(categories[category])
-	return [{'label': i, 'value': i} for i in output_options], output_options
+# @app.callback(
+#     [Output('checklist-three-categories-metastatic-sites', 'options'),
+#     Output('checklist-three-categories-metastatic-sites', 'value')],
+#     [Input('checklist-three-categories-survival-function-1', 'value')])
+# def set_weights_3_options(selected_categories):
+# 	categories = {'Lightweight': ['Capomulin','Ramicane'],
+# 					'Placebo': ['Placebo'],
+# 					'Heavyweight': ['Ceftamin', 'Infubinol', 'Ketapril', 
+# 								'Naftisol', 'Propriva', 'Stelasyn','Zoniferol']}
+# 	output_options = []
+# 	for category in selected_categories:
+# 		output_options.extend(categories[category])
+# 	return [{'label': i, 'value': i} for i in output_options], output_options
 
 
 
 
 @app.callback(
     Output('metastatic-sites', 'figure'),
-    [Input('checklist-three-categories-metastatic-sites', 'value')]
+    [Input('checklist-three-categories-survival-function-2', 'value')]
 )
 def update_metastatic_sites(drug_list):
     traces = []
