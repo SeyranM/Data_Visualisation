@@ -492,7 +492,9 @@ def update_survival_function(drug_list):
     							name = drug_name,
     							opacity = 0.9,
     							marker = dict(color=drug_colors[drug_name]),
-    							mode = 'lines')
+    							mode = 'lines',
+    							# customdata = [(drug_name, i) for i in np.arange(0,45,5)]
+    							)
 					    )
 
     return {
@@ -510,6 +512,7 @@ def update_survival_function(drug_list):
            	plot_bgcolor = colors['chart-background'],
             margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
             legend={'x': 0.99, 'y': 1},
+            clickmode = 'event+select'
         )
     }
 
@@ -533,18 +536,29 @@ def update_survival_function(drug_list):
 
 @app.callback(
     Output('tumor-volume', 'figure'),
-    [Input('checklist-three-categories-survival-function-2', 'value')]
+    [Input(component_id='survival-function', component_property='selectedData')]
 )
-def update_tumor_volume(drug_list):
+def update_tumor_volume(input_):
     traces = []
-    if drug_list:
-	    for drug_name in drug_list:
-	    	traces.append(go.Box(x = merged_df[merged_df['Drug Regimen'] == drug_name]['Timepoint'],
+    print(input_)
+    if input_ is None:
+    	drug_name = 'Placebo'
+    	traces.append(go.Box(x = merged_df[merged_df['Drug Regimen'] == drug_name]['Timepoint'],
 	    						y = merged_df[merged_df['Drug Regimen'] == drug_name]['Tumor Volume (mm3)'],
 	    						marker_color = drug_colors[drug_name],
 								name = drug_name
-								)
-					    )
+								))
+    else:
+    	# drug_list = input_['points'][1]['Drug Regimen']
+    	drug_list = []
+    	for drug_name in drug_list:
+    		traces.append(go.Box(x = merged_df[merged_df['Drug Regimen'] == drug_name]['Timepoint'],
+    			y = merged_df[merged_df['Drug Regimen'] == drug_name]['Tumor Volume (mm3)'],
+    			marker_color = drug_colors[drug_name],
+    			name = drug_name,
+    			customdata = [drug_name]
+    			)
+    		)
 
     return {
         'data': traces,
@@ -561,6 +575,7 @@ def update_tumor_volume(drug_list):
            	plot_bgcolor = colors['chart-background'],
             margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
             legend={'x': 0.99, 'y': 1},
+            clickmode = 'event+select'
         )
     }
 
